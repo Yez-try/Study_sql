@@ -54,5 +54,7 @@ CREATE TABLE BANKTRADE (
     CONSTRAINT BANKTRADE_ACCOUNTNUM_FK FOREIGN KEY (ACCOUNTNUM) REFERENCES BANKACCOUNT
 );
 
-
-
+select * from tab;
+drop table Banktrade;
+drop table accounts;
+drop table accountlist;
