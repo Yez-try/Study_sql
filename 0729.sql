@@ -304,6 +304,10 @@ WHERE (DEPARTMENT_ID, SALARY) IN
 (select department_id,min(salary) from employees
 group by department_iD);
 
+SELECT *
+FROM employees
+WHERE salary IN
+    (SELECT MIN(salary) FROM employees GROUP BY department_id);
 
 --8. 도시이름이 'S'로시작하는 지역에 근무하는 사원의 정보 출력	
 SELECT * FROM EMPLOYEES

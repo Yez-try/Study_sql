@@ -32,15 +32,10 @@ VALUES ('ID123','DLDIWL2345','일회원','LETS6363@HANMAIL.COM','010-7888-3553','NO
 
 
 CREATE TABLE BANKACCOUNT (
-    ACCOUNTNUM NUMBER,
-    USERNAME VARCHAR2(200),
-    BOOKNUM NUMBER,
-    ACCOUNTDATE DATE,
-    --제약조건 이름 : 테이블명_컬럼명_제약조건의약칭
-    CONSTRAINT BANKACCOUNT_ACCOUNTNUM_PK PRIMARY KEY (ACCOUNTNUM),
-    CONSTRAINT BANKACCOUNT_USERNAME_FK FOREIGN KEY (USERNAME) REFERENCES BANKMEMBERS ON DELETE CASCADE,
-    CONSTRAINT BANKACCOUNT_BOOKNUM_FK FOREIGN KEY (BOOKNUM) REFERENCES BANKBOOK
-);
+    ACNUM NUMBER(15) CONSTRAINT BANKACCOUNT_ACNUM_PK PRIMARY KEY,
+    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --부모가 삭제될때 자식테이블도 함께 삭제
+    BOOKNUM NUMBER CONSTRAINT BANKACCOUNT_ACID_FK REFERENCES BANKBOOK, --ON DELETE SET NULL --자식 컬럼에 null
+    ACDATE DATE CONSTRAINT BANKACCOUNT_ACDATE_NN NOT NULL);
 
 CREATE TABLE BANKTRADE (
     TRADENUM NUMBER,
@@ -48,13 +43,50 @@ CREATE TABLE BANKTRADE (
     TRADEEBALANCE NUMBER,
     TRADEDATE DATE,
     TRADEIO NUMBER(1) CHECK (TRADEIO BETWEEN 0 AND 1),
-    ACCOUNTNUM NUMBER,
+    ACNUM NUMBER,
     --제약조건
-		CONSTRAINT BANKTRADE_TRADENUM_PK PRIMARY KEY (TRADENUM),
-    CONSTRAINT BANKTRADE_ACCOUNTNUM_FK FOREIGN KEY (ACCOUNTNUM) REFERENCES BANKACCOUNT
+    CONSTRAINT BANKTRADE_TRADENUM_PK PRIMARY KEY (TRADENUM),
+    CONSTRAINT BANKTRADE_ACNUM_FK FOREIGN KEY (ACNUM) REFERENCES BANKACCOUNT
 );
 
-select * from tab;
+select * from bankaccount;
 drop table Banktrade;
 drop table accounts;
 drop table accountlist;
+
+desc bankaccount; --description 테이블명
+select * from user_constraints where table_name = 'BANKACCOUNT';
+
+select * from user_constraints;
+select * from all_constraints;
+
+
+insert into bankaccount 
+values (ACcount_SEQ.nextval, 'idtest2', 1660195790001, sysdate);
+
+select * from bankaccount;
+
+
+CREATE SEQUENCE ACcount_SEQ;
+
+commit;
+
+
+--로그인한 사용자가 가입한 상품의 이름과 이자율 조회
+select bookname, bookrate from bankbook
+where booknum in
+    (select booknum from bankaccount
+    where id = 'rereplay')
+;
+
+-- 로그인한 사용자가 가입한 상품의 이름, 이자율, 가입날짜 조회
+select bookname, bookrate, acdate
+from bankaccount ba left join bankbook b
+using(booknum)
+where id = 'rereplay';
+
+select ba.booknum, bookname, bookrate, acdate
+from bankaccount ba left join bankbook b
+on ba.booknum = b.booknum
+where id = 'rereplay'
+order by booknum;
