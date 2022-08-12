@@ -90,3 +90,15 @@ from bankaccount ba left join bankbook b
 on ba.booknum = b.booknum
 where id = 'rereplay'
 order by booknum;
+
+
+
+-- 주말 실습 문제 (게시판 만들기) --
+CREATE TABLE BOARD(
+    NO NUMBER(9) CONSTRAINT BOARD_NO_PK PRIMARY KEY,
+    TITLE VARCHAR2(200) CONSTRAINT BOARD_TITLE_NN NOT NULL,
+    CONTENTS CLOB,
+    ID VARCHAR2(50) CONSTRAINT BOARD_ID_NN NOT NULL,
+    BDATE DATE CONSTRAINT BOARD_BDATE_NN NOT NULL,
+    VIEWS NUMBER(9),
+    CONSTRAINT BOARD_ID_FK  FOREIGN KEY (ID) REFERENCES BANKMEMBERS);
