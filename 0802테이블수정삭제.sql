@@ -1,5 +1,15 @@
 select * from tab;
 
+select * from bankmembers;
+
+commit;
+
+update board set contents = 'contents update test' where no = 0;
+delete board where no = 1;
+
+insert into board (no, title, contents, id, views, bdate)
+values (1, 'title test', 'contents test', 'idhello', 0, '2022-08-01');
+
 -- 휴지통 테이블 조회하기
 select * from recyclebin;
 
