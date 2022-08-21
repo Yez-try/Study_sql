@@ -68,6 +68,7 @@ select * from bankaccount;
 
 
 CREATE SEQUENCE ACcount_SEQ;
+CREATE SEQUENCE Board_SEQ;
 
 commit;
 
@@ -117,3 +118,4 @@ CREATE TABLE QNA(
     DEPTH NUMBER(2)
     );
     
+select * from notice;
