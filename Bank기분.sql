@@ -3,7 +3,7 @@ CREATE TABLE BANKBOOK (
     BOOKNAME VARCHAR2(200),
     BOOKRATE NUMBER(4,2),
     BOOKSALE NUMBER(1) CHECK (BOOKSALE BETWEEN 0 AND 1),
-    --Á¦¾àÁ¶°Ç
+    --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     CONSTRAINT BANKBOOK_BOOKNUM_PK PRIMARY KEY (BOOKNUM)
 );
 
@@ -23,18 +23,18 @@ CREATE TABLE BANKMEMBERS (
 SELECT * FROM BANKMEMBERS;
 
 INSERT INTO BANKMEMBERS
-VALUES ('EWLIA','TOEYSLKD30930','°ÁÈ¸¿ø','EWILA@NAVER.COM','010-7863-8215','NORMAL');
+VALUES ('EWLIA','TOEYSLKD30930','ï¿½ï¿½È¸ï¿½ï¿½','EWILA@NAVER.COM','010-7863-8215','NORMAL');
 INSERT INTO BANKMEMBERS
-VALUES ('SYSTEM','SYSSYS333','°ü¸®ÀÚ','SYSBANK87555@GOOGLE.COM','010-5675-2244','MANAGER');
+VALUES ('SYSTEM','SYSSYS333','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','SYSBANK87555@GOOGLE.COM','010-5675-2244','MANAGER');
 INSERT INTO BANKMEMBERS
-VALUES ('ID123','DLDIWL2345','ÀÏÈ¸¿ø','LETS6363@HANMAIL.COM','010-7888-3553','NORMAL');
+VALUES ('ID123','DLDIWL2345','ï¿½ï¿½È¸ï¿½ï¿½','LETS6363@HANMAIL.COM','010-7888-3553','NORMAL');
 
 
 
 CREATE TABLE BANKACCOUNT (
     ACNUM NUMBER(15) CONSTRAINT BANKACCOUNT_ACNUM_PK PRIMARY KEY,
-    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --ºÎ¸ð°¡ »èÁ¦µÉ¶§ ÀÚ½ÄÅ×ÀÌºíµµ ÇÔ²² »èÁ¦
-    BOOKNUM NUMBER CONSTRAINT BANKACCOUNT_ACID_FK REFERENCES BANKBOOK, --ON DELETE SET NULL --ÀÚ½Ä ÄÃ·³¿¡ null
+    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½
+    BOOKNUM NUMBER CONSTRAINT BANKACCOUNT_ACID_FK REFERENCES BANKBOOK, --ON DELETE SET NULL --ï¿½Ú½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ null
     ACDATE DATE CONSTRAINT BANKACCOUNT_ACDATE_NN NOT NULL);
 
 CREATE TABLE BANKTRADE (
@@ -44,7 +44,7 @@ CREATE TABLE BANKTRADE (
     TRADEDATE DATE,
     TRADEIO NUMBER(1) CHECK (TRADEIO BETWEEN 0 AND 1),
     ACNUM NUMBER,
-    --Á¦¾àÁ¶°Ç
+    --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     CONSTRAINT BANKTRADE_TRADENUM_PK PRIMARY KEY (TRADENUM),
     CONSTRAINT BANKTRADE_ACNUM_FK FOREIGN KEY (ACNUM) REFERENCES BANKACCOUNT
 );
@@ -54,7 +54,7 @@ drop table Banktrade;
 drop table accounts;
 drop table accountlist;
 
-desc bankaccount; --description Å×ÀÌºí¸í
+desc bankaccount; --description ï¿½ï¿½ï¿½Ìºï¿½ï¿½
 select * from user_constraints where table_name = 'BANKACCOUNT';
 
 select * from user_constraints;
@@ -68,18 +68,19 @@ select * from bankaccount;
 
 
 CREATE SEQUENCE ACcount_SEQ;
+CREATE SEQUENCE Board_SEQ;
 
 commit;
 
 
---·Î±×ÀÎÇÑ »ç¿ëÀÚ°¡ °¡ÀÔÇÑ »óÇ°ÀÇ ÀÌ¸§°ú ÀÌÀÚÀ² Á¶È¸
+--ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 select bookname, bookrate from bankbook
 where booknum in
     (select booknum from bankaccount
     where id = 'rereplay')
 ;
 
--- ·Î±×ÀÎÇÑ »ç¿ëÀÚ°¡ °¡ÀÔÇÑ »óÇ°ÀÇ ÀÌ¸§, ÀÌÀÚÀ², °¡ÀÔ³¯Â¥ Á¶È¸
+-- ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ô³ï¿½Â¥ ï¿½ï¿½È¸
 select bookname, bookrate, acdate
 from bankaccount ba left join bankbook b
 using(booknum)
@@ -93,9 +94,9 @@ order by booknum;
 
 desc bankmembers;
 
-INSERT INTO BANKMEMBERS (ID, PW, NAME, EMAIL, PHONE, LV) VALUES ('id8585','pw8585','¿À¸¶ÀÌ','email8585@naver.com','010-8888-5555','NORMAL') ;
+INSERT INTO BANKMEMBERS (ID, PW, NAME, EMAIL, PHONE, LV) VALUES ('id8585','pw8585','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','email8585@naver.com','010-8888-5555','NORMAL') ;
 
--- ÁÖ¸» ½Ç½À ¹®Á¦ (°Ô½ÃÆÇ ¸¸µé±â) --
+-- ï¿½Ö¸ï¿½ ï¿½Ç½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½) --
 CREATE TABLE NOTICE(
     NUM NUMBER(9) CONSTRAINT NOTICE_NO_PK PRIMARY KEY,
     TITLE VARCHAR2(200) CONSTRAINT NOTICE_TITLE_NN NOT NULL,
