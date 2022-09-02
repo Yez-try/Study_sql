@@ -33,7 +33,7 @@ VALUES ('ID123','DLDIWL2345','��ȸ��','LETS6363@HANMAIL.COM','010-7888-3
 
 CREATE TABLE BANKACCOUNT (
     ACNUM NUMBER(15) CONSTRAINT BANKACCOUNT_ACNUM_PK PRIMARY KEY,
-    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --�θ� �����ɶ� �ڽ����̺�� �Բ� ����
+    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --�θ� �����ɶ� �ڽ����̺��? �Բ� ����
     BOOKNUM NUMBER CONSTRAINT BANKACCOUNT_ACID_FK REFERENCES BANKBOOK, --ON DELETE SET NULL --�ڽ� �÷��� null
     ACDATE DATE CONSTRAINT BANKACCOUNT_ACDATE_NN NOT NULL);
 
@@ -54,7 +54,7 @@ drop table Banktrade;
 drop table accounts;
 drop table accountlist;
 
-desc bankaccount; --description ���̺��
+desc bankaccount; --description ���̺��?
 select * from user_constraints where table_name = 'BANKACCOUNT';
 
 select * from user_constraints;
@@ -73,14 +73,14 @@ CREATE SEQUENCE Board_SEQ;
 commit;
 
 
---�α����� ����ڰ� ������ ��ǰ�� �̸��� ������ ��ȸ
+--�α����� ����ڰ�? ������ ��ǰ�� �̸��� ������ ��ȸ
 select bookname, bookrate from bankbook
 where booknum in
     (select booknum from bankaccount
     where id = 'rereplay')
 ;
 
--- �α����� ����ڰ� ������ ��ǰ�� �̸�, ������, ���Գ�¥ ��ȸ
+-- �α����� ����ڰ�? ������ ��ǰ�� �̸�, ������, ���Գ�¥ ��ȸ
 select bookname, bookrate, acdate
 from bankaccount ba left join bankbook b
 using(booknum)
@@ -96,7 +96,7 @@ desc bankmembers;
 
 INSERT INTO BANKMEMBERS (ID, PW, NAME, EMAIL, PHONE, LV) VALUES ('id8585','pw8585','������','email8585@naver.com','010-8888-5555','NORMAL') ;
 
--- �ָ� �ǽ� ���� (�Խ��� �����) --
+-- �ָ� �ǽ� ���� (�Խ��� �����?) --
 CREATE TABLE NOTICE(
     NUM NUMBER(9) CONSTRAINT NOTICE_NO_PK PRIMARY KEY,
     TITLE VARCHAR2(200) CONSTRAINT NOTICE_TITLE_NN NOT NULL,
@@ -121,4 +121,24 @@ CREATE TABLE QNA(
 CREATE SEQUENCE BOARD_SEQ
 ORDER;
 
-    
+CREATE TABLE NOTICEFILE(
+    FILENUM NUMBER CONSTRAINT NOTICEFILE_FILENUM_PK PRIMARY KEY,
+    FILENAME VARCHAR2(200) CONSTRAINT NOTICEFILE_FILENAME_NN NOT NULL,
+    ORINAME VARCHAR2(200) CONSTRAINT NOTICEFILE_ORINAME_NN NOT NULL,
+    NUM NUMBER CONSTRAINT NOTICEFILE_NUM_FK REFERENCES NOTICE(NUM) ON DELETE CASCADE
+);
+
+CREATE TABLE QNAFILE(
+    FILENUM NUMBER CONSTRAINT QNAFILE_FILENUM_PK PRIMARY KEY,
+    FILENAME VARCHAR2(200) CONSTRAINT QNAFILE_FILENAME_NN NOT NULL,
+    ORINAME VARCHAR2(200) CONSTRAINT QNAFILE_ORINAME_NN NOT NULL,
+    NUM NUMBER CONSTRAINT QNAFILE_NUM_FK REFERENCES QNA(NUM) ON DELETE CASCADE
+);
+
+CREATE TABLE MEMBERFILE(
+
+FILENUM NUMBER CONSTRAINT MEMBERFILE_FILENUM_PK PRIMARY KEY,
+FILENAME VARCHAR2(200) CONSTRAINT MEMBERFILE_FILENAME_NN NOT NULL,
+ORINAME VARCHAR2(200) CONSTRAINT MEMBERFILE_ORINAME_NN NOT NULL,
+USERNAME VARCHAR2(200) CONSTRAINT MEMERFILE_USERNAME_FK REFERENCES BANKMEMBERS(ID)
+);
