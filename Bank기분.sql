@@ -142,3 +142,14 @@ FILENAME VARCHAR2(200) CONSTRAINT MEMBERFILE_FILENAME_NN NOT NULL,
 ORINAME VARCHAR2(200) CONSTRAINT MEMBERFILE_ORINAME_NN NOT NULL,
 USERNAME VARCHAR2(200) CONSTRAINT MEMERFILE_USERNAME_FK REFERENCES BANKMEMBERS(ID)
 );
+
+
+select * from qna;
+
+SELECT num, title, writer, regdate, hit, ref, step, depth 
+		FROM (
+		  select rownum rown, Q.* 
+		  from QNA Q 
+		  where <include refid="search"></include>
+		  ORDER BY REF DESC, step asc)
+		WHERE rown between ${startRow} and ${lastRow} 
