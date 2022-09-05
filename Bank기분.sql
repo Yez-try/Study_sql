@@ -146,10 +146,29 @@ USERNAME VARCHAR2(200) CONSTRAINT MEMERFILE_USERNAME_FK REFERENCES BANKMEMBERS(I
 
 select * from qna;
 
-SELECT num, title, writer, regdate, hit, ref, step, depth 
-		FROM (
-		  select rownum rown, Q.* 
-		  from QNA Q 
-		  where <include refid="search"></include>
-		  ORDER BY REF DESC, step asc)
-		WHERE rown between ${startRow} and ${lastRow} 
+--SELECT num, title, writer, regdate, hit, ref, step, depth 
+--		FROM (
+--		  select rownum rown, Q.* 
+--		  from QNA Q 
+--		  where <include refid="search"></include>
+--		  ORDER BY REF DESC, step asc)
+--		WHERE rown between ${startRow} and ${lastRow} 
+
+
+-- 뱅크북댓글 테이블 만들기
+-- 시퀀스는 BOARD_SEQ 시퀀스 사용할 것임
+CREATE TABLE BB_COMMENT (
+    NUM NUMBER constraint bbCom_num_PK primary key,
+    BOOKNUM NUMBER constraint bbCom_booknum_FK references bankbook,
+    WRITER VARCHAR2(50),
+    CONTENTS VARCHAR2(4000),
+    REGDATE DATE
+    );
+    
+    
+select * from BB_COMMENT;
+
+--insert 테스트
+--insert into bb_comment (num, booknum, writer, contents, regDate)
+--values (Board_seq.nextval, 1662359624020, 0905, 'contents', sysdate);
+    
