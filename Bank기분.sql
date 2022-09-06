@@ -171,4 +171,12 @@ select * from BB_COMMENT;
 --insert Å×½ºÆ®
 --insert into bb_comment (num, booknum, writer, contents, regDate)
 --values (Board_seq.nextval, 1662359624020, 0905, 'contents', sysdate);
+
+select * from
+(select rownum rn , c.* from
+    (select *
+    from BB_COMMENT 
+    where booknum = 1662359624020
+    order by num desc) c)
+where rn between 1 and 5;
     
