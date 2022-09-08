@@ -179,4 +179,40 @@ select * from
     where booknum = 1662359624020
     order by num desc) c)
 where rn between 1 and 5;
+
+
+--delete BB_COMMENT where num = 672;
+rollback;
     
+    
+Create table Role(
+    Rolenum number constraint Role_num_pk primary key,
+    Rolename Varchar2(200) constraint Role_name_nn not null
+);
+
+commit;
+
+insert into role (rolenum, rolename)
+values (board_seq.nextval, 'admin');
+
+insert into role (rolenum, rolename)
+values (board_seq.nextval, 'vip');
+
+insert into role (rolenum, rolename)
+values (board_seq.nextval, 'member');
+
+select * from role;
+
+Create table member_role(
+    num number constraint mr_num_pk primary key,
+    username constraint MR_un_FK References BankMEMBERS (ID),
+    rolenum number constraint mr_rn_fk references role(rolenum));
+    
+commit;
+
+select * from bankMembers;
+
+insert into Member_role(num, username, rolenum)
+values (Board_seq.nextval, '0905', 684);
+
+select * from notice where num = 461;
