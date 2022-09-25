@@ -33,7 +33,7 @@ VALUES ('ID123','DLDIWL2345','ï¿½ï¿½È¸ï¿½ï¿½','LETS6363@HANMAIL.COM','010-7888-3
 
 CREATE TABLE BANKACCOUNT (
     ACNUM NUMBER(15) CONSTRAINT BANKACCOUNT_ACNUM_PK PRIMARY KEY,
-    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿? ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ID VARCHAR2(50) CONSTRAINT BANKACCOUNT_ID_FK REFERENCES BANKMEMBERS , --ON DELETE CASCADE --ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½? ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½
     BOOKNUM NUMBER CONSTRAINT BANKACCOUNT_ACID_FK REFERENCES BANKBOOK, --ON DELETE SET NULL --ï¿½Ú½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ null
     ACDATE DATE CONSTRAINT BANKACCOUNT_ACDATE_NN NOT NULL);
 
@@ -54,7 +54,7 @@ drop table Banktrade;
 drop table accounts;
 drop table accountlist;
 
-desc bankaccount; --description ï¿½ï¿½ï¿½Ìºï¿½ï¿?
+desc bankaccount; --description ï¿½ï¿½ï¿½Ìºï¿½ï¿½?
 select * from user_constraints where table_name = 'BANKACCOUNT';
 
 select * from user_constraints;
@@ -73,14 +73,14 @@ CREATE SEQUENCE Board_SEQ;
 commit;
 
 
---ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
+--ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 select bookname, bookrate from bankbook
 where booknum in
     (select booknum from bankaccount
     where id = 'rereplay')
 ;
 
--- ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ô³ï¿½Â¥ ï¿½ï¿½È¸
+-- ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ô³ï¿½Â¥ ï¿½ï¿½È¸
 select bookname, bookrate, acdate
 from bankaccount ba left join bankbook b
 using(booknum)
@@ -96,7 +96,7 @@ desc bankmembers;
 
 INSERT INTO BANKMEMBERS (ID, PW, NAME, EMAIL, PHONE, LV) VALUES ('id8585','pw8585','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','email8585@naver.com','010-8888-5555','NORMAL') ;
 
--- ï¿½Ö¸ï¿½ ï¿½Ç½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿?) --
+-- ï¿½Ö¸ï¿½ ï¿½Ç½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?) --
 CREATE TABLE NOTICE(
     NUM NUMBER(9) CONSTRAINT NOTICE_NO_PK PRIMARY KEY,
     TITLE VARCHAR2(200) CONSTRAINT NOTICE_TITLE_NN NOT NULL,
@@ -155,8 +155,8 @@ select * from qna;
 --		WHERE rown between ${startRow} and ${lastRow} 
 
 
--- ¹ðÅ©ºÏ´ñ±Û Å×ÀÌºí ¸¸µé±â
--- ½ÃÄö½º´Â BOARD_SEQ ½ÃÄö½º »ç¿ëÇÒ °ÍÀÓ
+-- ï¿½ï¿½Å©ï¿½Ï´ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BOARD_SEQ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE BB_COMMENT (
     NUM NUMBER constraint bbCom_num_PK primary key,
     BOOKNUM NUMBER constraint bbCom_booknum_FK references bankbook,
@@ -168,7 +168,7 @@ CREATE TABLE BB_COMMENT (
     
 select * from BB_COMMENT;
 
---insert Å×½ºÆ®
+--insert ï¿½×½ï¿½Æ®
 --insert into bb_comment (num, booknum, writer, contents, regDate)
 --values (Board_seq.nextval, 1662359624020, 0905, 'contents', sysdate);
 
